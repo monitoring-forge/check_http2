@@ -177,7 +177,7 @@ func (w *capWriter) Write(p []byte) (int, error) {
 	if w.size > w.Cap {
 		q := w.Cap - uint64(len(w.buffer))
 		if q != 0 {
-			w.buffer = append(w.buffer, p[0:q-1]...)
+			w.buffer = append(w.buffer, p[0:q]...)
 		}
 	} else {
 		w.buffer = append(w.buffer, p...)
