@@ -10,20 +10,22 @@ type CapWriter struct {
 }
 
 func (w *CapWriter) Write(p []byte) (int, error) {
-	w.size += uint64(len(p))
-	if w.size > w.Cap && w.NoDiscard {
+	size := w.size + uint64(len(p))
+	if size > w.Cap && w.NoDiscard {
 		return 0, fmt.Errorf("could not write body buffer. buffer is full")
 	}
 
-	if w.size > w.Cap {
+	if size > w.Cap {
 		q := w.Cap - uint64(len(w.buffer))
 		if q != 0 {
-			w.buffer = append(w.buffer, p[0:q-1]...)
+			w.buffer = append(w.buffer, p[0:q]...)
 		}
-	} else {
-		w.buffer = append(w.buffer, p...)
+		w.size = w.Cap
+		return int(q), nil
 	}
 
+	w.buffer = append(w.buffer, p...)
+	w.size = size
 	return len(p), nil
 }
 
