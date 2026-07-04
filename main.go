@@ -185,6 +185,10 @@ func _main() int {
 		case <-time.After(opt.Interim):
 		}
 	}
+	if rErr == nil {
+		fmt.Println("HTTP UNKNOWN - timeout")
+		return UNKNOWN
+	}
 	fmt.Println(rErr.Error())
 	return rErr.Code()
 }
