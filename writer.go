@@ -12,20 +12,21 @@ type CapWriter struct {
 func (w *CapWriter) Write(p []byte) (int, error) {
 	size := w.size + uint64(len(p))
 	if size > w.Cap && w.NoDiscard {
-		return 0, fmt.Errorf("could not write body buffer. buffer is full")
+		return 0, fmt.Errorf("could not write body buffer: buffer is full")
 	}
 
-	if size > w.Cap {
-		q := w.Cap - uint64(len(w.buffer))
-		if q != 0 {
-			w.buffer = append(w.buffer, p[0:q]...)
-		}
-		w.size = w.Cap
-		return int(q), nil
-	}
-
-	w.buffer = append(w.buffer, p...)
+	// Always report consuming the whole slice so callers like io.Copy don't treat this as a short write.
 	w.size = size
+
+	// Keep only up to Cap bytes; discard the rest.
+	if uint64(len(w.buffer)) < w.Cap {
+		remain := w.Cap - uint64(len(w.buffer))
+		if remain > uint64(len(p)) {
+			remain = uint64(len(p))
+		}
+		w.buffer = append(w.buffer, p[:int(remain)]...)
+	}
+
 	return len(p), nil
 }
 
