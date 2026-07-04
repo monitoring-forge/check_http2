@@ -19,11 +19,11 @@ type HumanBytes uint64
 
 // UnmarshalFlag parses human inputs like "10MB" or "2GiB" using go-humanize
 func (hb *HumanBytes) UnmarshalFlag(value string) error {
-	bytes, err := humanize.ParseBytes(value)
+	n, err := humanize.ParseBytes(value)
 	if err != nil {
 		return err
 	}
-	*hb = HumanBytes(bytes)
+	*hb = HumanBytes(n)
 	return nil
 }
 

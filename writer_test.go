@@ -45,14 +45,14 @@ func TestCapWriterWriteOverCapDiscard(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Write() error = %v", err)
 	}
-	if n != 4 {
-		t.Fatalf("Write() n = %d, want 4", n)
+	if n != 6 {
+		t.Fatalf("Write() n = %d, want 6", n)
 	}
 	if got := string(w.Bytes()); got != "abcd" {
 		t.Fatalf("Bytes() = %q, want %q", got, "abcd")
 	}
-	if got := w.Size(); got != 4 {
-		t.Fatalf("Size() = %d, want 4", got)
+	if got := w.Size(); got != 6 {
+		t.Fatalf("Size() = %d, want 6", got)
 	}
 }
 
@@ -66,14 +66,14 @@ func TestCapWriterWriteOverCapWithExistingBufferDiscard(t *testing.T) {
 	if err != nil {
 		t.Fatalf("second Write() error = %v", err)
 	}
-	if n != 2 {
-		t.Fatalf("second Write() n = %d, want 2", n)
+	if n != 4 {
+		t.Fatalf("second Write() n = %d, want 4", n)
 	}
 	if got := string(w.Bytes()); got != "abcde" {
 		t.Fatalf("Bytes() = %q, want %q", got, "abcde")
 	}
-	if got := w.Size(); got != 5 {
-		t.Fatalf("Size() = %d, want 5", got)
+	if got := w.Size(); got != 7 {
+		t.Fatalf("Size() = %d, want 7", got)
 	}
 }
 

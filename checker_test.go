@@ -92,7 +92,7 @@ func TestBuildRequestWithSSLAndSNI(t *testing.T) {
 	}
 }
 
-// BuildRequestTest with invaild authorization
+// BuildRequestTest with invalid authorization
 func TestBuildRequestWithInvalidAuthorization(t *testing.T) {
 	opt := Opt{
 		Hostname:      "example.com",
