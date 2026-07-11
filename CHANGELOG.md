@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.0.23](https://github.com/kazeburo/check_http2/compare/v0.0.22...v0.0.23) - 2026-07-11
+
+- go: bump golang.org/x/sys from 0.46.0 to 0.47.0 in the dependencies group by @dependabot[bot] in https://github.com/kazeburo/check_http2/pull/17
+
 ## [v0.0.22](https://github.com/kazeburo/check_http2/compare/v0.0.21...v0.0.22) - 2026-07-04
 
 - pin actions commithash by @kazeburo in https://github.com/kazeburo/check_http2/pull/13
