@@ -7,4 +7,4 @@ require (
 	github.com/jessevdk/go-flags v1.6.1
 )
 
-require golang.org/x/sys v0.46.0 // indirect
+require golang.org/x/sys v0.47.0 // indirect
