@@ -1,4 +1,4 @@
-module github.com/kazeburo/check_http2
+module github.com/monitoring-forge/check_http2
 
 go 1.25.0
 
