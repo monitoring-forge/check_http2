@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.0.24](https://github.com/monitoring-forge/check_http2/compare/v0.0.23...v0.0.24) - 2026-07-16
+
+- repo transfer and add verify opt by @kazeburo in https://github.com/monitoring-forge/check_http2/pull/19
+
 ## [v0.0.23](https://github.com/kazeburo/check_http2/compare/v0.0.22...v0.0.23) - 2026-07-11
 
 - go: bump golang.org/x/sys from 0.46.0 to 0.47.0 in the dependencies group by @dependabot[bot] in https://github.com/kazeburo/check_http2/pull/17
