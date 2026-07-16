@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"fmt"
 	"net/http"
 	"testing"
 )
@@ -112,6 +113,18 @@ func TestBuildRequestWithInvalidAuthorization(t *testing.T) {
 	}
 }
 
+func getTransport(opt *Opt) (*http.Transport, error) {
+	tripper := opt.MakeTransport()
+	if tripper == nil {
+		return nil, fmt.Errorf("MakeTransport() returned nil")
+	}
+	transport, ok := tripper.(*http.Transport)
+	if !ok {
+		return nil, fmt.Errorf("MakeTransport() returned non-http.Transport")
+	}
+	return transport, nil
+}
+
 // MakeTransport tests
 func TestMakeTransport(t *testing.T) {
 	opt := Opt{
@@ -119,14 +132,9 @@ func TestMakeTransport(t *testing.T) {
 		SNI:      true,
 		Hostname: "example.com:443",
 	}
-
-	tripper := opt.MakeTransport()
-	if tripper == nil {
-		t.Fatalf("MakeTransport() returned nil, want non-nil")
-	}
-	transport, ok := tripper.(*http.Transport)
-	if !ok {
-		t.Fatalf("MakeTransport() returned non-http.Transport, want http.Transport")
+	transport, err := getTransport(&opt)
+	if err != nil {
+		t.Fatalf("MakeTransport() error = %v", err)
 	}
 	if transport.TLSClientConfig.ServerName != "example.com" {
 		t.Fatalf("MakeTransport() TLSClientConfig.ServerName = %q, want %q", transport.TLSClientConfig.ServerName, "example.com")
@@ -140,13 +148,9 @@ func TestMakeTransportWithTLSMaxVersion(t *testing.T) {
 			SSL:           true,
 			TLSMaxVersion: "1.2",
 		}
-		tripper := opt.MakeTransport()
-		transport, ok := tripper.(*http.Transport)
-		if !ok {
-			t.Fatalf("MakeTransport() returned non-http.Transport, want http.Transport")
-		}
-		if transport == nil {
-			t.Fatalf("MakeTransport() returned nil, want non-nil")
+		transport, err := getTransport(&opt)
+		if err != nil {
+			t.Fatalf("MakeTransport() error = %v", err)
 		}
 		if transport.TLSClientConfig.MaxVersion != tls.VersionTLS12 {
 			t.Fatalf("MakeTransport() TLSClientConfig.MaxVersion = %d, want %d", transport.TLSClientConfig.MaxVersion, tls.VersionTLS12)
@@ -157,13 +161,9 @@ func TestMakeTransportWithTLSMaxVersion(t *testing.T) {
 			SSL:           true,
 			TLSMaxVersion: "1.3",
 		}
-		tripper := opt.MakeTransport()
-		transport, ok := tripper.(*http.Transport)
-		if !ok {
-			t.Fatalf("MakeTransport() returned non-http.Transport, want http.Transport")
-		}
-		if transport == nil {
-			t.Fatalf("MakeTransport() returned nil, want non-nil")
+		transport, err := getTransport(&opt)
+		if err != nil {
+			t.Fatalf("MakeTransport() error = %v", err)
 		}
 		if transport.TLSClientConfig.MaxVersion != tls.VersionTLS13 {
 			t.Fatalf("MakeTransport() TLSClientConfig.MaxVersion = %d, want %d", transport.TLSClientConfig.MaxVersion, tls.VersionTLS13)
@@ -174,13 +174,9 @@ func TestMakeTransportWithTLSMaxVersion(t *testing.T) {
 			SSL:           true,
 			TLSMaxVersion: "1.1",
 		}
-		tripper := opt.MakeTransport()
-		transport, ok := tripper.(*http.Transport)
-		if !ok {
-			t.Fatalf("MakeTransport() returned non-http.Transport, want http.Transport")
-		}
-		if transport == nil {
-			t.Fatalf("MakeTransport() returned nil, want non-nil")
+		transport, err := getTransport(&opt)
+		if err != nil {
+			t.Fatalf("MakeTransport() error = %v", err)
 		}
 		if transport.TLSClientConfig.MaxVersion != tls.VersionTLS11 {
 			t.Fatalf("MakeTransport() TLSClientConfig.MaxVersion = %d, want %d", transport.TLSClientConfig.MaxVersion, tls.VersionTLS11)
@@ -188,5 +184,36 @@ func TestMakeTransportWithTLSMaxVersion(t *testing.T) {
 		if transport.TLSClientConfig.MinVersion != tls.VersionTLS11 {
 			t.Fatalf("MakeTransport() TLSClientConfig.MinVersion = %d, want %d", transport.TLSClientConfig.MinVersion, tls.VersionTLS11)
 		}
+	}
+}
+
+// MakeTransport tests with VerifySSL false
+func TestMakeTransportWithVerifySSLFalse(t *testing.T) {
+	opt := Opt{
+		SSL: true,
+	}
+
+	transport, err := getTransport(&opt)
+	if err != nil {
+		t.Fatalf("MakeTransport() error = %v", err)
+	}
+	if transport.TLSClientConfig.InsecureSkipVerify != true {
+		t.Fatalf("MakeTransport() TLSClientConfig.InsecureSkipVerify = %v, want %v", transport.TLSClientConfig.InsecureSkipVerify, true)
+	}
+}
+
+// MakeTransport tests with VerifySSL true
+func TestMakeTransportWithVerifySSLTrue(t *testing.T) {
+	opt := Opt{
+		SSL:       true,
+		VerifySSL: true,
+	}
+
+	transport, err := getTransport(&opt)
+	if err != nil {
+		t.Fatalf("MakeTransport() error = %v", err)
+	}
+	if transport.TLSClientConfig.InsecureSkipVerify != false {
+		t.Fatalf("MakeTransport() TLSClientConfig.InsecureSkipVerify = %v, want %v", transport.TLSClientConfig.InsecureSkipVerify, false)
 	}
 }

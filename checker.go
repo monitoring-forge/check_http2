@@ -53,6 +53,7 @@ type Opt struct {
 	TLSMaxVersion       string        `long:"tls-max" description:"maximum supported TLS version" choice:"1.0" choice:"1.1" choice:"1.2" choice:"1.3"`
 	TCP4                bool          `short:"4" description:"use tcp4 only"`
 	TCP6                bool          `short:"6" description:"use tcp6 only"`
+	VerifySSL           bool          `long:"verify-ssl" description:"verify SSL certificate"`
 	Version             bool          `short:"v" long:"version" description:"Show version"`
 	bufferSize          uint64
 	expectByte          []byte
@@ -90,7 +91,7 @@ func (opt *Opt) MakeTransport() http.RoundTripper {
 	}
 
 	tlsConfig := &tls.Config{
-		InsecureSkipVerify: true,
+		InsecureSkipVerify: !opt.VerifySSL,
 	}
 	if opt.SNI {
 		host, _, err := net.SplitHostPort(opt.Hostname)

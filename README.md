@@ -33,6 +33,7 @@ Application Options:
       --tls-max=[1.0|1.1|1.2|1.3] maximum supported TLS version
   -4                              use tcp4 only
   -6                              use tcp6 only
+      --verify-ssl                verify SSL certificate
   -v, --version                   Show version
 
 Help Options:
