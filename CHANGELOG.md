@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.0.26](https://github.com/monitoring-forge/check_http2/compare/v0.0.25...v0.0.26) - 2026-10-03
+
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_http2/pull/27
+- ci: bump Songmu/tagpr from 1.20.1 to 1.20.2 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_http2/pull/31
+- Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_http2/pull/34
+- ci: bump Songmu/tagpr from 1.20.2 to 1.20.3 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_http2/pull/32
+- go: bump the dependencies group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/monitoring-forge/check_http2/pull/35
+- ci: bump Songmu/tagpr from 1.20.3 to 1.21.0 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_http2/pull/36
+
 ## [v0.0.25](https://github.com/monitoring-forge/check_http2/compare/v0.0.24...v0.0.25) - 2026-08-08
 
 - Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_http2/pull/22
