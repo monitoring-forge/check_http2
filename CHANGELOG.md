@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.0.27](https://github.com/monitoring-forge/check_http2/compare/v0.0.26...v0.0.27) - 2026-11-14
+
+- ci: bump Songmu/tagpr from 1.21.4 to 1.22.0 in the tagpr group by @dependabot[bot] in https://github.com/monitoring-forge/check_http2/pull/45
+- go: bump golang.org/x/sys from 0.49.0 to 0.50.0 in the dependencies group by @dependabot[bot] in https://github.com/monitoring-forge/check_http2/pull/46
+
 ## [v0.0.26](https://github.com/monitoring-forge/check_http2/compare/v0.0.25...v0.0.26) - 2026-10-31
 
 - Sync files with `monitoring-forge/github-common` by @monitoring-forge-files-sync-action[bot] in https://github.com/monitoring-forge/check_http2/pull/27
